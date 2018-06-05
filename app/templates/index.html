@@ -1,0 +1,96 @@
+{% extends "bootstrap/base.html" %}
+
+{% block styles %}
+{{ super() }}
+<style type="text/css">
+.main{
+    text-align: center; /*让div内部文字居中*/
+    background-color: #0;
+    border-radius: 20px;
+    font-family: Univers;
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.padding_top{
+    padding-top: 15px;
+}
+
+</style>
+{% endblock %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block navbar %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-1" style="height: 45px; border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; font-family:Univers;
+        font-weight:bold; font-size:14px; line-height: 45px">
+            <a href="{{ url_for('main.explore') }}">Explore</a>
+        </div>
+        <div class="col-md-1" style="height: 45px; border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; font-family:Univers;
+            font-weight:bold; font-size:14px; line-height: 45px">
+            <a href="{{ url_for('main.help') }}">Help</a>
+        </div>
+        <div class="col-md-1" style="height: 45px; border: 1px solid rgba(0, 0, 0, 0.2); text-align: center; font-family:Univers;
+        font-weight:bold; font-size:14px; line-height: 45px">
+            <a href="{{ url_for('main.login') }}">Sign in</a>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="main">
+    <h2>New Flask Blog?</h2>
+    <p>Create your free Flask Blog ID to get started.</p>
+    <hr />
+    <form class="form-horizontal" role="form"> 
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="BlogID" style="text-align:right">
+                Blog ID
+            </label>
+            <div class="col-md-7">
+                <input id="BlogID" class="form-control" type="text" placeholder="Blog ID">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Email" style="text-align:right">
+                Email
+            </label>
+            <div class="col-md-7">
+                <input id="Email" class="form-control" type="text" placeholder="Email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="BlogID" style="text-align:right">
+                Password
+            </label>
+            <div class="col-md-7">
+                <input id="Password" class="form-control" type="password" placeholder="Password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <input style="background: CornflowerBlue" class="btn btn-default btn-block" type="submit" value="Sign up">
+            </div>
+            
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

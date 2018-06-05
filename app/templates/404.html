@@ -1,0 +1,32 @@
+{% extends "bootstrap/base.html" %}
+
+{% block styles %}
+{{ super() }}
+<style type="text/css">
+.main{
+    text-align: center; /*让div内部文字居中*/
+    background-color: #0;
+    border-radius: 20px;
+    font-family: Univers;
+    width: 200px;
+    height: 30px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+</style>
+{% endblock %}
+
+
+{% block title %} Page Not Found {% endblock %}
+
+{% block content %}
+<div class="main">
+    <h1>Not Found</h1>
+    <hr />
+</div>
+{% endblock%}
