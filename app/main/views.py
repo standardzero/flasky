@@ -1,13 +1,30 @@
 from flask import render_template, session, redirect, url_for, flash
-from .forms import LoginForm
+from flask_login import login_required
+from .forms import RegistrationForm
+from ..models import User
 
 from . import main
-from ..email import send_mail
+from ..email import send_email
+from .. import db
+from ..auth import auth
+from .token import generate_confirmation_token
 
-
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(blog_id=form.blog_id.data,
+                    email=form.email.data,
+                    password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        token = generate_confirmation_token(user.blog_id)
+        send_email(user.email, 'Confirm Your Account',
+                   'auth/email/confirm', user=user, token=token)
+        flash('A confirmation email has been sent to you by email.')
+        print('You can now login')
+        return redirect(url_for('auth.login'))
+    return render_template('index.html', form=form)
 
 
 @main.route('/explore')
@@ -20,23 +37,12 @@ def help():
     return render_template('help.html')
 
 
-@main.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        print('BlogID: %s Login' % form.blog_id)
-        flash('username error or password error!')
-        return redirect(url_for('main.login'))
-    if(session.get('form')):
-        form = session.get('form')
-    return render_template('login.html', form=form)
+@main.route('/secret')
+@login_required
+def secret():
+    return 'Only authenticated users ara allowed!'
 
 
-@main.route('/get_password')
-def get_password():
-    return render_template('get_password.html')
-
-
-@main.route('/send_mail')
-def sendmail():
-    return send_mail()
+@main.route('/welcome')
+def welcome():
+    return render_template('welcome.html')

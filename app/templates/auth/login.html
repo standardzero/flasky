@@ -1,0 +1,87 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+<style type="text/css">
+.main{
+    text-align: center; /*让div内部文字居中*/
+    background-color: #0;
+    border-radius: 20px;
+    font-family: Univers;
+    width: 500px;
+    height: 400px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+</style>
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="main"> 
+    <h2>Welcome to Flask Blog</h2>
+    <p>Login With Your Blog ID<p>
+    <hr />
+    <form class="form-horizontal" role="form" method="POST"> 
+        <div class="form-group required">
+            {{form.hidden_tag()}}
+            <label class="col-md-4 control-label" for="BlogID" style="text-align:right">
+                {{form.blog_id.label(class="control-label", for="BlogID", style="text-align:right")}}
+            </label>
+            <div class="col-md-7">
+                {{form.blog_id(id="BlogID", class="form-control", placeholder="Blog ID", required=True)}}
+            </div>
+            {% for error in form.errors.blog_id%}
+                <p class="help-block has-error">{{ error }}</p>
+            {% endfor %}
+
+        </div>
+
+        <div class="form-group required">
+            <label class="col-md-4" style="text-align:right">
+                {{form.password.label(class="control-label",for="Password", style="text-align:right")}}
+            </label>
+            <div class="col-md-7">
+                {{form.password(id="Password", class="form-control", placeholder="Password", required=True)}}
+            </div>
+            {% for error in form.errors.password %}
+                <p class="help-block has-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">
+                    {{message}}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                {{form.submit(style="background: CornflowerBlue", class="btn btn-default btn-block")}}
+            </div>
+            
+        </div>
+
+        <div class="form-group">
+            <p>
+            <a href="{{ url_for('auth.get_password') }}">Forgot Password?</a> | <a href="{{ url_for('main.index') }}">Create Account</a>
+            </p>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

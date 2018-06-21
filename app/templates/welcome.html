@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+   <h1>Welcome, 
+       {% if current_user.is_authenticated %}
+       {{current_user.blog_id}}
+       {% else %}
+            Stranger
+       {%endif%}
+       !
+   </h1> 
+</body>
+</html>
